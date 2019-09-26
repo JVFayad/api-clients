@@ -22,7 +22,7 @@
                 "sha256:69ff89fa3c3a8337015478a1a0744f52a9fef5d12c1efa01a01f99bcce9bf10c"
             ],
             "index": "pypi",
-            "version": "==2.0.6"
+            "version": "==2.0.11"
         },
         "djangorestframework": {
             "hashes": [
@@ -30,7 +30,7 @@
                 "sha256:c375e4f95a3a64fccac412e36fb42ba36881e52313ec021ef410b40f67cddca4"
             ],
             "index": "pypi",
-            "version": "==3.8.2"
+            "version": "==3.9.1"
         },
         "psycopg2-binary": {
             "hashes": [
