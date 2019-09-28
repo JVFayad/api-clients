@@ -2,13 +2,15 @@ from django.shortcuts import render
 
 from .models import Client
 from .serializers import ClientSerializer
+
+from products.models import Product
 from products.serializers import ProductSerializer
 
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.exceptions import APIException
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.exceptions import NotFound, MethodNotAllowed
 
 
 class ClientList(generics.ListCreateAPIView):
@@ -26,6 +28,7 @@ class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
 
+
 class ClientProductList(APIView):
     """
     List and Add favorite products to Clients
@@ -33,19 +36,50 @@ class ClientProductList(APIView):
     serializer_class = ProductSerializer
 
     def get(self, *args, **kwargs):
+        """
+        List favorite products from client
+        """
+        client_id = kwargs.get('pk')
+
         try:
             client = Client.objects.get(id=kwargs.get('pk'))
         except Client.DoesNotExist:
-            raise APIException(detail="Not found.")
+            raise NotFound(detail="Client not found.")
 
         favorite_products = client.favorite_products.all()
 
-        paginator = LimitOffsetPagination()
-        result_page = paginator.paginate_queryset(favorite_products, self.request, view=self)
+        paginator = PageNumberPagination()
+        result_page = paginator.paginate_queryset(
+            favorite_products, self.request, view=self)
+
         serializer = self.serializer_class(result_page, many=True)
 
         return paginator.get_paginated_response(serializer.data)     
 
     def post(self, *args, **kwargs):
-        return 0
+        """
+        Add client favorite product
+        """
+        client_id = kwargs.get('pk')
+        product_id = self.request.data.get('product_id')
+
+        try:
+            client = Client.objects.get(id=client_id)
+        except Client.DoesNotExist:
+            raise NotFound(detail="Client not found.")
+        else:
+            try:
+                product = Product.objects.get(id=product_id)
+            except Product.DoesNotExist:
+                raise NotFound(detail="Product not found.")
+
+        favorite_products = client.favorite_products
+        
+        if not favorite_products.filter(id=product_id).exists():
+            favorite_products.add(product)
+
+        return Response(
+            self.serializer_class(product).data, 
+            status=200
+        )
     
