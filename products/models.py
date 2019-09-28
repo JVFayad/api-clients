@@ -12,3 +12,10 @@ class Product(models.Model):
     def __str__(self):
         return self.title
     
+    @property
+    def reviewScore(self):
+        reviews = self.reviews.all()
+         
+        return reviews.aggregate(
+            models.Avg('rate')
+        )['rate__avg']
