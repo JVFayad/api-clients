@@ -28,7 +28,7 @@ SECRET_KEY = '3lto1x_98@f!te*hb*r)2j424z=4cj!@g41m5f899i8b3h#t*1'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.99.101'
+    '192.168.99.103'
 ]
 
 
@@ -88,6 +88,19 @@ DATABASES = {
         'USER': 'postgres',
         'HOST': 'db',
         'PORT': 5432,
+    }
+}
+
+
+# Redis Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "example"
     }
 }
 
