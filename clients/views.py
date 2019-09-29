@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.exceptions import NotFound, MethodNotAllowed
+from rest_framework.permissions import IsAuthenticated
 
 
 class ClientList(generics.ListCreateAPIView):
@@ -19,6 +20,7 @@ class ClientList(generics.ListCreateAPIView):
     """
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -27,6 +29,7 @@ class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class ClientProductList(APIView):
@@ -34,6 +37,7 @@ class ClientProductList(APIView):
     List and Add favorite products to Clients
     """
     serializer_class = ProductSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get(self, *args, **kwargs):
         """
