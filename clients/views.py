@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.cache import cache
 
 from .models import Client
 from .serializers import ClientSerializer
@@ -13,6 +14,20 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.exceptions import NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 
+# TODO Mover essas funções
+def retrieveCache(key, queryset_method):
+    if cache.get(key):
+        queryset = cache.get(key)
+    else:
+        queryset = queryset_method()
+        cache.set(key, queryset)
+
+    return queryset
+
+def updateCache(key, queryset_method):
+    cache.delete(key)
+    cache.set(key, queryset_method())
+
 
 class ClientList(generics.ListCreateAPIView):
     """
@@ -21,6 +36,27 @@ class ClientList(generics.ListCreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self, *args, **kwargs):
+        """
+        Get clients or retrieve data from cache 
+        """
+        queryset = retrieveCache(
+            'clients', super(ClientList, self).get_queryset)
+        
+        return queryset
+
+    def post(self, *args, **kwargs):
+        """
+        Create client and update data on cache 
+        """
+        response = super(ClientList, self).post(*args, **kwargs)
+        
+        if response.status_code == 201:
+            updateCache(
+                'clients', super(ClientList, self).get_queryset)
+
+        return response
 
 
 class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -31,6 +67,32 @@ class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ClientSerializer
     permission_classes = (IsAuthenticated,)
 
+    def put(self, request, *args, **kwargs):
+        """
+        Update client and update data on cache 
+        """
+        response = super(
+            ClientDetail, self).put(request, *args, **kwargs)
+
+        if response.status_code == 200:
+            updateCache(
+                'clients', super(ClientDetail, self).get_queryset)
+
+        return response
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Delete client and update data on cache 
+        """
+        response = super(
+            ClientDetail, self).delete(request, *args, **kwargs)
+
+        if response.status_code == 204:
+            updateCache(
+                'clients', super(ClientDetail, self).get_queryset)
+
+        return response
+
 
 class ClientProductList(APIView):
     """
@@ -39,9 +101,19 @@ class ClientProductList(APIView):
     serializer_class = ProductSerializer
     permission_classes = (IsAuthenticated,)
 
+    def get_cache_key(self, client_id):
+        """
+        Returns Key for queryset cache
+        """
+        key = 'client_{}_favorite_products'.format(
+            client_id
+        )
+
+        return key
+
     def get(self, *args, **kwargs):
         """
-        List favorite products from client
+        Get favorite products from client 
         """
         client_id = kwargs.get('pk')
 
@@ -50,7 +122,10 @@ class ClientProductList(APIView):
         except Client.DoesNotExist:
             raise NotFound(detail="Client not found.")
 
-        favorite_products = client.favorite_products.all()
+        key = self.get_cache_key(client_id)
+
+        favorite_products = retrieveCache(
+            key, client.favorite_products.all)
 
         paginator = PageNumberPagination()
         result_page = paginator.paginate_queryset(
@@ -78,9 +153,11 @@ class ClientProductList(APIView):
                 raise NotFound(detail="Product not found.")
 
         favorite_products = client.favorite_products
-        
+        key = self.get_cache_key(client_id)
+
         if not favorite_products.filter(id=product_id).exists():
             favorite_products.add(product)
+            updateCache(key, favorite_products.all)
 
         return Response(
             self.serializer_class(product).data, 
