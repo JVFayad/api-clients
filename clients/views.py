@@ -14,7 +14,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.exceptions import NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 
-# TODO Mover essas funções
+# TODO Realocate these functions for system use
 def retrieve_cache(key, queryset_method):
     if cache.get(key):
         queryset = cache.get(key)
