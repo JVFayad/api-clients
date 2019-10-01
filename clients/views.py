@@ -15,7 +15,7 @@ from rest_framework.exceptions import NotFound, MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 
 # TODO Mover essas funções
-def retrieveCache(key, queryset_method):
+def retrieve_cache(key, queryset_method):
     if cache.get(key):
         queryset = cache.get(key)
     else:
@@ -24,7 +24,7 @@ def retrieveCache(key, queryset_method):
 
     return queryset
 
-def updateCache(key, queryset_method):
+def update_cache(key, queryset_method):
     cache.delete(key)
     cache.set(key, queryset_method())
 
@@ -41,7 +41,7 @@ class ClientList(generics.ListCreateAPIView):
         """
         Get clients or retrieve data from cache 
         """
-        queryset = retrieveCache(
+        queryset = retrieve_cache(
             'clients', super(ClientList, self).get_queryset)
         
         return queryset
@@ -53,7 +53,7 @@ class ClientList(generics.ListCreateAPIView):
         response = super(ClientList, self).post(*args, **kwargs)
         
         if response.status_code == 201:
-            updateCache(
+            update_cache(
                 'clients', super(ClientList, self).get_queryset)
 
         return response
@@ -75,7 +75,7 @@ class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
             ClientDetail, self).put(request, *args, **kwargs)
 
         if response.status_code == 200:
-            updateCache(
+            update_cache(
                 'clients', super(ClientDetail, self).get_queryset)
 
         return response
@@ -88,7 +88,7 @@ class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
             ClientDetail, self).delete(request, *args, **kwargs)
 
         if response.status_code == 204:
-            updateCache(
+            update_cache(
                 'clients', super(ClientDetail, self).get_queryset)
 
         return response
@@ -124,7 +124,7 @@ class ClientProductList(APIView):
 
         key = self.get_cache_key(client_id)
 
-        favorite_products = retrieveCache(
+        favorite_products = retrieve_cache(
             key, client.favorite_products.all)
 
         paginator = PageNumberPagination()
@@ -157,7 +157,7 @@ class ClientProductList(APIView):
 
         if not favorite_products.filter(id=product_id).exists():
             favorite_products.add(product)
-            updateCache(key, favorite_products.all)
+            update_cache(key, favorite_products.all)
 
         return Response(
             self.serializer_class(product).data, 
