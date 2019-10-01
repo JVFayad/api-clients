@@ -29,7 +29,7 @@ def update_cache(key, queryset_method):
     cache.set(key, queryset_method())
 
 
-class ClientList(generics.ListCreateAPIView):
+class ClientListCreate(generics.ListCreateAPIView):
     """
     List and Create Clients
     """
@@ -42,7 +42,7 @@ class ClientList(generics.ListCreateAPIView):
         Get clients or retrieve data from cache 
         """
         queryset = retrieve_cache(
-            'clients', super(ClientList, self).get_queryset)
+            'clients', super(ClientListCreate, self).get_queryset)
         
         return queryset
 
@@ -50,16 +50,17 @@ class ClientList(generics.ListCreateAPIView):
         """
         Create client and update data on cache 
         """
-        response = super(ClientList, self).post(*args, **kwargs)
+        _super = super(ClientListCreate, self)
+        response = _super.post(*args, **kwargs)
         
         if response.status_code == 201:
             update_cache(
-                'clients', super(ClientList, self).get_queryset)
+                'clients', _super.get_queryset)
 
         return response
 
 
-class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
+class ClientRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve, Update and Delete Clients
     """
@@ -71,12 +72,12 @@ class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
         """
         Update client and update data on cache 
         """
-        response = super(
-            ClientDetail, self).put(request, *args, **kwargs)
+        _super = super(ClientRetrieveUpdateDestroy, self)
+        response = _super.put(request, *args, **kwargs)
 
         if response.status_code == 200:
             update_cache(
-                'clients', super(ClientDetail, self).get_queryset)
+                'clients', _super.get_queryset)
 
         return response
 
@@ -84,12 +85,12 @@ class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
         """
         Delete client and update data on cache 
         """
-        response = super(
-            ClientDetail, self).delete(request, *args, **kwargs)
+        _super = super(ClientRetrieveUpdateDestroy, self)
+        response = _super.delete(request, *args, **kwargs)
 
         if response.status_code == 204:
             update_cache(
-                'clients', super(ClientDetail, self).get_queryset)
+                'clients', _super.get_queryset)
 
         return response
 
