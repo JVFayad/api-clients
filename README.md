@@ -24,7 +24,7 @@ docker-compose run web ./manage.py createsuperuser --email <email> --username <u
 
 Sobre a autenticação da API, a mesma é feita através de um simples Token. As chamadas só poderão ser realizadas por um usuário cadastrado e com o token gerado, do contrário não será autorizado. A chamada para retornar o token de um usuário específico é:
 ```
-**POST** /api/token-auth/
+__POST__ /api/token-auth/
 
 Parâmetros: 
     - username
