@@ -28,12 +28,35 @@ __POST__ /api/token-auth/
 
 ```
 Parâmetros: 
-    - username
-    - senha
+    - username: username do Usuário desejado;
+    - senha: senha do Usuário;
 ```
 
 Todos os endpoints de listagem possuem paginação, então caso queira uma página especifica, é só inserir "?page=x" ao final da url. As informações de número da página e total de páginas estarão no início do json de retorno. 
 
 <h2>Endpoints:</h2>
+
+<h3>Clientes</h3>
+
+    - <h5>Listar</h5>
+        __GET__ /api/client/
+
+    - <h5>Cadastrar</h5>
+        __POST__ /api/client/
+
+        ```
+        Parâmetros: 
+            - username: username do Usuário desejado;
+            - senha: senha do Usuário;
+        ```
+
+    - <h5>Recuperar específico</h5>
+        __GET__ /api/client/{id}
+
+    - <h5>Atualizar</h5>
+        __PUT__ /api/client/{id}
+
+    - <h5>Remover</h5>
+        __DELETE__ /api/client/{id}
 
 Se tiverem quaisquer dúvidas podem entrar em contato comigo.
