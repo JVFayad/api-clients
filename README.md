@@ -45,7 +45,8 @@ Algumas observações:
 
 - Tentei focar nos principais endpoints pedidos no teste, assim, para algumas operações não disponíveis em chamadas da API, como o cadastro de produtos (em decorrência também de necessitar de uma imagem para cadastro) e a criação de reviews, utilizei e recomendo a utilização do shell (django-admin.py shell) e do admin do Django (/admin);
 
-- Utilizei o Redis para cache e melhor performance da API em algumas chamadas, através de dois métodos diferentes. Para os clientes implementei um cache manual, que sempre é atualizado quando ocorrem alterações no banco de dados. Para os produtos utilizei o cache padrão do Django, que é feito por tempo (a configuração do mesmo pode ser feita no * *settings.py* *);
+- Utilizei o Redis para cache e melhor performance da API em algumas chamadas, através de dois métodos diferentes. Para os clientes implementei um cache manual, que sempre é atualizado quando ocorrem alterações no banco de dados. Para os produtos utilizei o cache padrão do Django, que é feito por tempo (a configuração do mesmo pode ser feita no 
+*settings.py*);
 
 <h1>Endpoints:</h1>
 
