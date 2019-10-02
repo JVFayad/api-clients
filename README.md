@@ -26,10 +26,12 @@ Sobre a autenticação da API, a mesma é feita através de um simples Token. As
 
 __POST__ /api/token-auth/
 
-```
 Parâmetros: 
-    - username: username do Usuário desejado;
-    - senha: senha do Usuário;
+```
+{
+    "username": <username>,
+    "password": <senha>
+}
 ```
 
 Todos os endpoints de listagem possuem paginação, então caso queira uma página especifica, é só inserir "?page=x" ao final da url. As informações de número da página e total de páginas estarão no início do json de retorno. 
@@ -44,14 +46,16 @@ __GET__ /api/client/
 - <h5>Cadastrar</h5>
 __POST__ /api/client/
 
+Parâmetros:
 ```
-Parâmetros: 
-    - username: username do Usuário desejado;
-    - senha: senha do Usuário;
+{
+	"name": <Nome do Cliente>,
+	"email": <Email do cliente>
+}
 ```
 
 - <h5>Recuperar</h5>
-    __GET__ /api/client/{id}
+__GET__ /api/client/{id}
 
 - <h5>Atualizar</h5>
 __PUT__ /api/client/{id}
