@@ -12,7 +12,7 @@ Esta API foi desenvolvida utilizando basicamente:
 
 Comandos importantes para inicialização (utilizando docker-compose):
 
-- Roda as migrations 
+- Executa as migrations 
 ```
 docker-compose run web./manage.py migrate 
 ```
@@ -20,6 +20,11 @@ docker-compose run web./manage.py migrate
 - Cria Super Usuário
 ```
 docker-compose run web ./manage.py createsuperuser --email <email> --username <username>
+```
+
+- Inicia a API 
+```
+docker-compose up
 ```
 
 Sobre a autenticação da API, a mesma é feita através de um simples Token. As chamadas só poderão ser realizadas por um usuário cadastrado e com o token gerado, do contrário não será autorizado. A chamada para retornar o token de um usuário específico é:
