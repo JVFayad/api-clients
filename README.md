@@ -34,6 +34,11 @@ Parâmetros:
 }
 ```
 
+O Token deve ser passado como um Header da chamada, seguindo o seguinte padrão (exemplo curl):
+```
+curl -H "Authorization: Token <Token do Usuário>" 
+```
+
 Todos os endpoints de listagem possuem paginação, então caso queira uma página especifica, é só inserir "?page=x" ao final da url. As informações de número da página e total de páginas estarão no início do json de retorno. 
 
 <h2>Endpoints:</h2>
