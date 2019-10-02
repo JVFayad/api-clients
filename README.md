@@ -44,7 +44,7 @@ Todos os endpoints de listagem possuem paginação, então caso queira uma pági
     -__GET__ /api/client/
 
 - <h5>Cadastrar</h5>
-    -__POST__ /api/client/
+    __POST__ /api/client/
 
     - Parâmetros:
     ```
