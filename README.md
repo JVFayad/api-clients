@@ -41,15 +41,15 @@ curl -H "Authorization: Token <Token do Usuário>"
 
 Todos os endpoints de listagem possuem paginação, então caso queira uma página especifica, é só inserir "?page=x" ao final da url. As informações sobre outras páginas estarão no início do json de retorno. 
 
-<h2>Endpoints:</h2>
+<h1>Endpoints:</h1>
 
-<h3>Clientes</h3>
+<h2>Clientes</h2>
 
-- <h4>Listar</h4>
+- <h3>Listar</h3>
 __GET__ /api/client/
 
 
-- <h4>Cadastrar</h4>
+- <h3>Cadastrar</h3>
 __POST__ /api/client/
 
 Parâmetros:
@@ -61,11 +61,11 @@ Parâmetros:
 ```
 
 
-- <h4>Recuperar</h4>
+- <h3>Recuperar</h3>
 __GET__ /api/client/{id}
 
 
-- <h4>Atualizar</h4>
+- <h3>Atualizar</h3>
 __PUT__ /api/client/{id}
 
 Parâmetros:
@@ -77,18 +77,18 @@ Parâmetros:
 ```
 
 
-- <h4>Remover</h4>
+- <h3>Remover</h3>
 __DELETE__ /api/client/{id}
 
 
 
-<h3>Produtos Favoritos do Cliente</h3>
+<h2>Produtos Favoritos do Cliente</h2>
 
-- <h4>Listar</h4>
+- <h3>Listar</h3>
 __GET__ /api/client/{id}/product-list/
 
 
-- <h4>Adicionar</h4>
+- <h3>Adicionar</h3>
 __POST__ /api/client/{id}/product-list/
 
 Parâmetros:
@@ -99,13 +99,13 @@ Parâmetros:
 ```
 
 
-<h3>Produtos</h3>
+<h2>Produtos</h2>
 
-- <h4>Listar</h4>
+- <h3>Listar</h3>
 __GET__ /api/product/
 
 
-- <h4>Recuperar</h4>
+- <h3>Recuperar</h3>
 __GET__ /api/product/{id}
 
 Se tiverem quaisquer dúvidas podem entrar em contato comigo.
