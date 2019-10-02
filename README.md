@@ -59,9 +59,9 @@ Algumas observações:
 - Utilizei o Redis para cache e melhor performance da API em algumas chamadas, através de dois métodos diferentes. Para os clientes implementei um cache manual, que sempre é atualizado quando ocorrem alterações no banco de dados. Para os produtos utilizei o cache padrão do Django, que é feito por tempo (a configuração do mesmo pode ser feita no 
 *settings.py*);
 
-- Criei testes utilizando o APITestCase para os clientes, mas não tive tempo de criar para outros componentes. 
+- Criei testes utilizando o APITestCase para os clientes, mas não tive tempo de criar para outros componentes;
 
-- Espero ter entendido corretamente a idéia e regras de negócio do teste. Caso tenham alguma dúvida sobre como executar o projeto ou qualquer outra coisa, podem entrar em contato comigo.
+- Espero ter entendido corretamente a idéia e regras de negócio do teste. Caso tenham alguma dúvida sobre como executar o projeto ou qualquer outra coisa, podem entrar em contato comigo;
 
 <h1>Endpoints:</h1>
 
