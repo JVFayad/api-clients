@@ -29,8 +29,8 @@ __POST__ /api/token-auth/
 Parâmetros: 
 ```
 {
-    "username": <username>,
-    "password": <senha>
+    "username": <Username>,
+    "password": <Senha>
 }
 ```
 
@@ -40,6 +40,22 @@ curl -H "Authorization: Token <Token do Usuário>"
 ```
 
 Todos os endpoints de listagem possuem paginação, então caso queira uma página especifica, é só inserir "?page=x" ao final da url. As informações sobre outras páginas estarão no início do json de retorno. 
+
+Algumas observações:
+
+    - Tentei focar nos principais endpoints pedidos no teste, assim, para algumas operações não disponíveis em chamadas da API, como o cadastro de produtos (em decorrência também de necessitar de uma imagem para cadastro) e a criação de reviews, utilizei e recomendo a utilização do shell e do admin do Django:
+
+    Comando Sheel 
+    ```
+    django-admin.py shell
+    ```
+
+    Link Admin
+    ``` 
+    /admin
+    ```
+
+    - Utilizei o Redis para cache e melhor performance da API em algumas chamadas, através de dois métodos diferentes. Para os clientes implementei um cache manual, que sempre é atualizado quando ocorrem alterações no banco de dados. Para os produtos utilizei o cache padrão do Django, que é feito por tempo (a configuração do mesmo pode ser feita no * *settings.py* *);
 
 <h1>Endpoints:</h1>
 
@@ -61,7 +77,7 @@ Parâmetros:
 ```
 
 
-- <h3>Recuperar</h3>
+- <h3>Detalhar</h3>
 __GET__ /api/client/{id}
 
 
@@ -105,7 +121,7 @@ Parâmetros:
 __GET__ /api/product/
 
 
-- <h3>Recuperar</h3>
+- <h3>Detalhar</h3>
 __GET__ /api/product/{id}
 
 Se tiverem quaisquer dúvidas podem entrar em contato comigo.
