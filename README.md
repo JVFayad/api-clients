@@ -48,12 +48,12 @@ __GET__ /api/client/
 __POST__ /api/client/
 
     - Parâmetros:
-    ```
+```
     {
         "name": <Nome do Cliente>,
 	    "email": <Email do cliente>
     }
-    ```
+```
 
 - <h5>Recuperar</h5>
 __GET__ /api/client/{id}
