@@ -41,18 +41,18 @@ Todos os endpoints de listagem possuem paginação, então caso queira uma pági
 <h3>Clientes</h3>
 
 - <h5>Listar</h5>
-__GET__ /api/client/
+    -__GET__ /api/client/
 
 - <h5>Cadastrar</h5>
-__POST__ /api/client/
+    -__POST__ /api/client/
 
-Parâmetros:
-```
-{
-	"name": <Nome do Cliente>,
-	"email": <Email do cliente>
-}
-```
+    - Parâmetros:
+    ```
+    {
+        "name": <Nome do Cliente>,
+	    "email": <Email do cliente>
+    }
+    ```
 
 - <h5>Recuperar</h5>
 __GET__ /api/client/{id}
