@@ -7,6 +7,7 @@ Esta API foi desenvolvida utilizando basicamente:
     - Django Rest Framework 3.9.1
     - PostgreSQL 11.5
     - Redis 5.0.6
+    - Dockerfile
 ```
 
 
